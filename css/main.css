@@ -21,7 +21,50 @@ body {
 	background-color: #010101;
 	font-family: raleway_f, sans-serif;
 	line-height: 1.55;
+	color: var(--text);
+	overflow-x: hidden;
 }
+
+/* Навигационная панель по Фигме */
+.nav-bar {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 60px;
+	background: rgba(1, 1, 1, 0.45);
+	backdrop-filter: blur(10px);
+	-webkit-backdrop-filter: blur(10px);
+	z-index: 1000;
+	display: flex;
+	align-items: center;
+	padding: 0 calc(var(--index) * 2);
+}
+.nav-bar__logo {
+	font-weight: 900;
+	text-transform: uppercase;
+	color: var(--text);
+	text-decoration: none;
+	font-size: calc(var(--index) * 0.9);
+	letter-spacing: 2px;
+	margin-right: auto;
+}
+.nav-bar__link {
+	color: var(--text);
+	text-decoration: none;
+	font-size: calc(var(--index) * 0.75);
+	margin-left: calc(var(--index) * 1.5);
+	opacity: 0.8;
+	transition: opacity 0.3s ease;
+}
+.nav-bar__link:hover, .nav-bar__link.active {
+	opacity: 1;
+}
+.nav-bar__link--right {
+	margin-left: auto;
+}
+
+/* Шапка и Параллакс */
 .main-header {
 	position: relative;
 }
@@ -67,38 +110,58 @@ body {
 	transform: translate3d(0, calc(var(--scrollTop) / 5.7), 0);
 }
 .layer__header {
-	z-index: 1;
+	z-index: 10;
 	transform: translate3d(0, calc(var(--scrollTop) / 2), 0);
 	transition: var(--transition);
 	will-change: transform;
-	text-transform: uppercase;
-	font-weight: 900;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+}
+
+/* Кнопка Услуги из Фигмы */
+.hero-button {
+	display: inline-block;
+	padding: calc(var(--index) * 0.6) calc(var(--index) * 2.5);
+	background: rgba(30, 35, 38, 0.75);
+	border: 2px solid rgba(255, 255, 255, 0.2);
 	color: var(--text);
-	text-shadow: 0 0 15px #9d822b;
+	font-size: calc(var(--index) * 1.5);
+	font-weight: 900;
+	text-transform: uppercase;
+	text-decoration: none;
+	border-radius: 18px;
+	box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+	backdrop-filter: blur(5px);
+	transition: background 0.3s, transform 0.2s;
+	letter-spacing: 2px;
+	margin-top: calc(var(--index) * 10);
 }
-.layers__title {
-	font-size: calc(var(--index) * 2.65);
-	letter-spacing: calc(var(--index) / 2.25);
+.hero-button:hover {
+	background: rgba(30, 35, 38, 0.95);
+	transform: scale(1.05);
 }
-.layers__caption {
-	font-size: calc(var(--index) / 1.175);
-	letter-spacing: calc(var(--index) / 3.5);
-	margin-top: calc(var(--index) * -.75);
-}
+
+/* Мягкий переход "Под землю" */
 .main-article {
 	--main-article-transform: translate3d(0, calc(var(--scrollTop) / -7.5), 0);
 	min-height: 100vh;
-	background-size: cover;
-	background-position: center;
+	/* Плавный переход цвета: от лесного оттенка травы глубоко в темноту */
+	background: linear-gradient(to bottom, #1f2711 0%, #11160a 20%, #010101 100%);
 	color: var(--text);
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	position: relative;
 	text-align: center;
-	/* Update: */
 	top: -1px;
 	z-index: 10;
+	padding: 0 20px;
+}
+.main-article__content {
+	max-width: calc(var(--index) * 35);
 }
 .main-article__header {
 	text-transform: uppercase;
@@ -109,20 +172,172 @@ body {
 	will-change: transform;
 }
 .main-article__paragraph {
-	max-width: calc(var(--index) * 30);
 	font-size: calc(var(--index) * .9);
 	margin-top: calc(var(--index) / 1.25);
 	transform: var(--main-article-transform);
 	transition: var(--transition);
 	will-change: transform;
+	opacity: 0.85;
 }
 .content {
 	will-change: transform;
 }
-.copy {
-	position: absolute;
-	bottom: calc(var(--index) * 2.5);
-	opacity: .45;
-	font-size: calc(var(--index) * .75);
-	letter-spacing: calc(var(--index) / 37.5);
+
+/* Разделитель из камней */
+.stone-divider {
+	background-color: #010101;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	overflow: hidden;
+	width: 100%;
+	padding: 40px 0;
+	gap: calc(var(--index) * -0.5); /* Камни слегка заходят друг на друга */
+	z-index: 15;
+	position: relative;
+}
+.stone-divider img {
+	width: calc(var(--index) * 4);
+	height: auto;
+	user-select: none;
+	pointer-events: none;
+}
+/* Эффект случайного поворота и масштабирования для каждого камня */
+.stone-divider img:nth-child(1) { transform: rotate(12deg) scale(1.1); }
+.stone-divider img:nth-child(2) { transform: rotate(-45deg) scale(0.95); }
+.stone-divider img:nth-child(3) { transform: rotate(75deg) scale(1.05); }
+.stone-divider img:nth-child(4) { transform: rotate(-20deg) scale(1.2); }
+.stone-divider img:nth-child(5) { transform: rotate(190deg) scale(0.9); }
+.stone-divider img:nth-child(6) { transform: rotate(-115deg) scale(1.15); }
+.stone-divider img:nth-child(7) { transform: rotate(40deg) scale(1); }
+.stone-divider img:nth-child(8) { transform: rotate(-85deg) scale(1.05); }
+
+/* Подвал сайта */
+.main-footer {
+	background-color: #010101;
+	padding: calc(var(--index) * 2) calc(var(--index) * 3);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border-top: 1px solid rgba(255, 255, 255, 0.05);
+	position: relative;
+	z-index: 15;
+}
+.footer__socials {
+	display: flex;
+	gap: 20px;
+}
+.social-link {
+	color: var(--text);
+	text-decoration: none;
+	font-size: calc(var(--index) * 0.7);
+	opacity: 0.5;
+	transition: opacity 0.3s;
+}
+.social-link:hover {
+	opacity: 1;
+}
+.footer__policy a {
+	color: var(--text);
+	text-decoration: none;
+	font-size: calc(var(--index) * 0.7);
+	opacity: 0.5;
+	transition: opacity 0.3s;
+}
+.footer__policy a:hover {
+	opacity: 1;
+}
+
+/* Стили для дополнительных статичных страниц */
+.inner-page {
+	background: #0d1109 linear-gradient(to bottom, #0d1109 0%, #010101 100%);
+	padding-top: 100px;
+}
+.static-container {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 40px 20px;
+}
+.page-title {
+	font-size: calc(var(--index) * 2.5);
+	text-transform: uppercase;
+	margin-bottom: 40px;
+	font-weight: 900;
+}
+.services-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	gap: 30px;
+}
+.service-card {
+	background: rgba(255, 255, 255, 0.03);
+	border: 1px solid rgba(255, 255, 255, 0.08);
+	padding: 30px;
+	border-radius: 12px;
+}
+.service-card__title {
+	font-size: 1.4rem;
+	margin-bottom: 15px;
+	color: #B7C474;
+}
+.service-card__desc {
+	opacity: 0.8;
+	font-size: 0.95rem;
+}
+.about-text p {
+	font-size: 1.2rem;
+	margin-bottom: 20px;
+	opacity: 0.85;
+	max-width: 800px;
+}
+
+/* ==========================================================================
+   АДАПТАЦИЯ ИСКЛЮЧИТЕЛЬНО ПОД ТЕЛЕФОНЫ (Экран менее 768px)
+   ========================================================================== */
+@media (max-width: 768px) {
+	:root {
+		--index: calc(1vw + 1vh * 1.5); /* Увеличиваем масштаб единиц для читаемости */
+	}
+	.nav-bar {
+		padding: 0 15px;
+	}
+	.nav-bar__link {
+		display: none; /* Прячем текстовые ссылки для компактности на смартфонах */
+	}
+	.nav-bar__link--right {
+		display: block; /* Оставляем только ЛК */
+		margin-left: auto;
+	}
+	.hero-button {
+		font-size: 1.2rem;
+		padding: 12px 35px;
+		border-radius: 12px;
+	}
+	.main-article__header {
+		font-size: 1.6rem;
+	}
+	.main-article__paragraph {
+		font-size: 0.95rem;
+	}
+	.stone-divider {
+		padding: 20px 0;
+	}
+	.stone-divider img {
+		width: 45px; /* Фиксированный размер камней на узких экранах */
+	}
+	.main-footer {
+		flex-direction: column;
+		gap: 20px;
+		text-align: center;
+		padding: 30px 15px;
+	}
+	.footer__socials {
+		justify-content: center;
+	}
+	.services-grid {
+		grid-template-columns: 1fr; /* Карточки услуг выстраиваются строго в один столбец */
+	}
+	.page-title {
+		font-size: 2rem;
+	}
 }
